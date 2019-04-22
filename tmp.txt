@@ -1,0 +1,75 @@
+Getting env variables for app moviefun in org DellEMC_PAL / space nisanth_mathilakath_@dell.com as nisanth_mathilakath_@dell.com...
+OK
+
+System-Provided:
+{
+ "VCAP_SERVICES": {
+  "cleardb": [
+   {
+    "binding_name": null,
+    "credentials": {
+     "hostname": "us-cdbr-iron-east-02.cleardb.net",
+     "jdbcUrl": "jdbc:mysql://us-cdbr-iron-east-02.cleardb.net/ad_4cb9578705bd8b1?user=b0d8dbfae29d2f\u0026password=9af48f9e",
+     "name": "ad_4cb9578705bd8b1",
+     "password": "9af48f9e",
+     "port": "3306",
+     "uri": "mysql://b0d8dbfae29d2f:9af48f9e@us-cdbr-iron-east-02.cleardb.net:3306/ad_4cb9578705bd8b1?reconnect=true",
+     "username": "b0d8dbfae29d2f"
+    },
+    "instance_name": "movies2db",
+    "label": "cleardb",
+    "name": "movies2db",
+    "plan": "spark",
+    "provider": null,
+    "syslog_drain_url": null,
+    "tags": [
+     "Data Stores",
+     "Cloud Databases",
+     "Developer Tools",
+     "Web-based",
+     "Data Store",
+     "Development and Test Tools",
+     "Online Backup \u0026 Storage",
+     "Single Sign-On",
+     "Buyable",
+     "mysql",
+     "relational",
+     "Cloud Security and Monitoring"
+    ],
+    "volume_mounts": []
+   }
+  ]
+ }
+}
+
+{
+ "VCAP_APPLICATION": {
+  "application_id": "a5113bfa-e024-45e9-aac6-fa70afcd89ab",
+  "application_name": "moviefun",
+  "application_uris": [
+   "moviefun-responsive-lemur.cfapps.io"
+  ],
+  "application_version": "6e39a16e-bfbd-448a-bb63-ceb0ff772fdc",
+  "cf_api": "https://api.run.pivotal.io",
+  "limits": {
+   "disk": 1024,
+   "fds": 16384,
+   "mem": 1024
+  },
+  "name": "moviefun",
+  "space_id": "139545b9-0e8d-40c0-8223-21454f96287a",
+  "space_name": "nisanth_mathilakath_@dell.com",
+  "uris": [
+   "moviefun-responsive-lemur.cfapps.io"
+  ],
+  "users": null,
+  "version": "6e39a16e-bfbd-448a-bb63-ceb0ff772fdc"
+ }
+}
+
+No user-defined env variables have been set
+
+No running env variables have been set
+
+No staging env variables have been set
+
