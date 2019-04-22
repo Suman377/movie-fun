@@ -65,6 +65,7 @@ public class ActionServlet extends HttpServlet {
 
             Movie movie = new Movie(title, director, genre, rating, year);
 
+
             moviesBean.addMovie(movie);
             response.sendRedirect("moviefun");
             return;

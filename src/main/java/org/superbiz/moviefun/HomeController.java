@@ -1,6 +1,12 @@
 package org.superbiz.moviefun;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.superbiz.moviefun.albums.Album;
 import org.superbiz.moviefun.albums.AlbumFixtures;
@@ -14,6 +20,12 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
+/*    @Autowired
+    PlatformTransactionManager moviesPlatformTransactionManager;
+
+    @Autowired
+    PlatformTransactionManager albumsPlatformTransactionManager;
+*/
     private final MoviesBean moviesBean;
     private final AlbumsBean albumsBean;
     private final MovieFixtures movieFixtures;
@@ -33,17 +45,71 @@ public class HomeController {
 
     @GetMapping("/setup")
     public String setup(Map<String, Object> model) {
-        for (Movie movie : movieFixtures.load()) {
-            moviesBean.addMovie(movie);
+        /*for (Movie movie : movieFixtures.load()) {
+
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setName("movieAdd");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+            TransactionStatus status = moviesPlatformTransactionManager.getTransaction(def);
+            try {
+                moviesBean.addMovie(movie);
+            }
+            catch (Exception ex) {
+                moviesPlatformTransactionManager.rollback(status);
+                throw ex;
+            }
+            moviesPlatformTransactionManager.commit(status);
+
         }
 
         for (Album album : albumFixtures.load()) {
-            albumsBean.addAlbum(album);
-        }
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+
+            def.setName("albumadd");
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+            TransactionStatus status = albumsPlatformTransactionManager.getTransaction(def);
+            try {
+                albumsBean.addAlbum(album);
+            }
+            catch (Exception ex) {
+                albumsPlatformTransactionManager.rollback(status);
+                throw ex;
+            }
+            albumsPlatformTransactionManager.commit(status);
+
+        }*/
+
+        createMovies();
+        createAlbums();
+
 
         model.put("movies", moviesBean.getMovies());
         model.put("albums", albumsBean.getAlbums());
 
         return "setup";
+    }
+
+
+
+    private void createAlbums() {
+        //new TransactionTemplate(albumsPlatformTransactionManager).execute(status -> {
+            for (Album album : albumFixtures.load()) {
+                albumsBean.addAlbum(album);
+            }
+
+            return;
+        //});
+    }
+
+    private void createMovies() {
+        //new TransactionTemplate(moviesPlatformTransactionManager).execute(status -> {
+            for (Movie movie : movieFixtures.load()) {
+                moviesBean.addMovie(movie);
+            }
+
+            return;
+        //});
     }
 }

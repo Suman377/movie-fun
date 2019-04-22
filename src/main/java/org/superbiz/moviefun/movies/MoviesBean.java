@@ -16,8 +16,13 @@
  */
 package org.superbiz.moviefun.movies;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.superbiz.moviefun.albums.Album;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,29 +34,35 @@ import java.util.List;
 @Repository
 public class MoviesBean {
 
-    @PersistenceContext
+    @Autowired
+    PlatformTransactionManager moviesPlatformTransactionManager;
+
+    @PersistenceContext(unitName="moviesperunit")
     private EntityManager entityManager;
 
     public Movie find(Long id) {
         return entityManager.find(Movie.class, id);
     }
 
-    @Transactional
     public void addMovie(Movie movie) {
-        entityManager.persist(movie);
+        new TransactionTemplate(moviesPlatformTransactionManager).execute(status -> {
+            entityManager.persist(movie);
+
+            return null;
+        });
     }
 
-    @Transactional
+    //@Transactional
     public void editMovie(Movie movie) {
         entityManager.merge(movie);
     }
 
-    @Transactional
+    //@Transactional
     public void deleteMovie(Movie movie) {
         entityManager.remove(movie);
     }
 
-    @Transactional
+    //@Transactional
     public void deleteMovieId(long id) {
         Movie movie = entityManager.find(Movie.class, id);
         deleteMovie(movie);
